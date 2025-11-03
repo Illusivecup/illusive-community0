@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illusive Community</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* === БАЗОВЫЕ СТИЛИ И СБРОС === */
+        :root {
+            --bg-primary: #0c0f1d;
+            --bg-secondary: #1a243f;
+            --bg-tertiary: #2d3b5b;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-tertiary: #e2e8f0;
+            --accent-primary: #4CAF50;
+            --accent-secondary: #8BC34A;
+            --accent-warning: #FF9800;
+            --accent-danger: #f44336;
+            --accent-success: #4CAF50;
+            --accent-purple: #9333EA;
+            --accent-blue: #3B82F6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --accent-gold: #FFD700;
+            --accent-silver: #C0C0C0;
+            --accent-bronze: #CD7F32;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --border-medium: rgba(255, 255, 255, 0.2);
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --shadow-heavy: 0 25px 50px rgba(0, 0, 0, 0.5);
+            --radius-small: 8px;
+            --radius-medium: 15px;
+            --radius-large: 20px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary), var(--bg-tertiary));
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* === АНИМИРОВАННЫЙ ФОН === */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(76, 175, 80, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* === ЗАГОЛОВОК === */
+        .main-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 30px 0;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 8vw, 3.5em);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .title-main {
+            display: block;
+            font-size: 0.4em;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            letter-spacing: 8px;
+        }
+
+        .title-highlight {
+            display: block;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary), #CDDC39);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0;
+            text-shadow: 
+                0 0 10px rgba(76, 175, 80, 0.5),
+                0 0 20px rgba(76, 175, 80, 0.3),
+                0 0 30px rgba(76, 175, 80, 0.2);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            from {
+                text-shadow: 
+                    0 0 10px rgba(76, 175, 80, 0.5),
+                    0 0 20px rgba(76, 175, 80, 0.3),
+                    0 0 30px rgba(76, 175, 80, 0.2);
+            }
+            to {
+                text-shadow: 
+                    0 0 15px rgba(76, 175, 80, 0.7),
+                    0 0 25px rgba(76, 175, 80, 0.5),
+                    0 0 35px rgba(76, 175, 80, 0.3),
+                    0 0 45px rgba(76, 175, 80, 0.2);
+            }
+        }
+
+        .title-date {
+            display: block;
+            font-size: 0.3em;
+            color: var(--text-tertiary);
+            letter-spacing: 4px;
+            margin-top: 10px;
+        }
+
+        /* === КНОПКИ ПЕРЕХОДА === */
+        .navigation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-btn {
+            width: 100%;
+            padding: 25px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-large);
+            color: var(--text-primary);
+            font-family: 'Exo 2', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover,
+        .nav-btn:focus {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
+            outline: none;
+        }
+
+        /* Разные цвета для кнопок с переливами */
+        .tournament-btn {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.7), rgba(139, 195, 74, 0.7)) !important;
+            border: 1px solid rgba(76, 175, 80, 0.3) !important;
+            animation: teamPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes teamPulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
+            50% { box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5); }
+        }
+
+        .matchups-btn {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.7), rgba(37, 99, 235, 0.7)) !important;
+            border: 1px solid rgba(59, 130, 246, 0.3) !important;
+            animation: schedulePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes schedulePulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); }
+        }
+
+        .btn-icon {
+            font-size: 32px;
+        }
+
+        .btn-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        /* === ФУТЕР === */
+        .footer {
+            margin-top: auto;
+            padding: 20px 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            width: 100%;
+        }
+
+        /* === АДАПТИВНОСТЬ === */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .navigation-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .nav-btn {
+                padding: 20px 15px;
+                font-size: 16px;
+            }
+            
+            .btn-icon {
+                font-size: 28px;
+            }
+            
+            .main-header {
+                margin-bottom: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-btn {
+                padding: 18px 12px;
+                font-size: 15px;
+            }
+            
+            .btn-icon {
+                font-size: 24px;
+            }
+            
+            .btn-description {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg" id="animatedBg"></div>
+    
+    <div class="container">
+        <header class="main-header">
+            <h1 class="main-title">
+                <span class="title-main">Illusive</span>
+                <span class="title-highlight">Community</span>
+                <span class="title-date">Сообщество игроков</span>
+            </h1>
+        </header>
+
+        <main class="main-content">
+            <div class="navigation-grid">
+                <div class="nav-item">
+                    <a href="https://illusivecup.github.io/illusive-cup-website" class="nav-btn tournament-btn" target="_blank">
+                        <span class="btn-icon">🏆</span>
+                        Сайт турнира
+                        <span class="btn-description">Официальный сайт Illusive Cup</span>
+                    </a>
+                </div>
+
+                <div class="nav-item">
+                    <a href="https://illusivecup.github.io/illusive-community" class="nav-btn matchups-btn" target="_blank">
+                        <span class="btn-icon">⚔️</span>
+                        Сайт матчапов
+                        <span class="btn-description">Сообщество и статистика матчей</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Illusive Community © 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        // Создание анимированного фона
+        function createAnimatedBackground() {
+            const bg = document.getElementById('animatedBg');
+            if (!bg) return;
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 100 + 50;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 30 + 20;
+                const animationDelay = Math.random() * 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                
+                bg.appendChild(particle);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createAnimatedBackground();
+        });
+    </script>
+</body>
+</html>
